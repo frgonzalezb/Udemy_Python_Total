@@ -16,6 +16,7 @@ CONSIGNA:
     - Si N = ?, el programa debe terminar, mostrando una frase 
       de victoria y mostrar la cantidad de intentos.
 '''
+
 from random import randint
 from colorama import Fore # Porque... ¿por qué no? 😁
 
