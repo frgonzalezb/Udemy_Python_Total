@@ -28,10 +28,11 @@ from colorama import Fore
 
 
 def escoger_dificultad():
-    print('1: Fácil')
-    print('2: Normal')
-    print('3: Difícil')
-    msg = f'{Fore.MAGENTA}Escoja el nivel de dificultad (1 | 2 | 3):{Fore.RESET} '
+    print('1: Cheems')
+    print('2: Wojak')
+    print('3: Doge')
+    print('4: Gigachad')
+    msg = f'{Fore.MAGENTA}Escoje el nivel de dificultad (1 | 2 | 3 | 4):{Fore.RESET} '
     return input(msg)
 
 
@@ -128,6 +129,20 @@ def obtener_palabra_secreta():
                 'zanquituerto',
             ]
             break
+        if nivel == '4':
+            # Selección de palabras God-level
+            palabras = [
+                'arbeiterunfallverischerungsgesetz',
+                'bundesprasidentenstichwahlwiederholungsverschiebung',
+                'chargoggagoggmanchauggagoggchaubunagungamaugg',
+                'diethylaminopropionylethoxycarbonylaminophenothiazine',
+                'hippopotomonstrosesquipedaliophobia',
+                'llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch',
+                'miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan',
+                'rindfleischetikettierungsuberwachungsaufgabenubertragungsgesetz',
+                'taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu',
+            ]
+            break
         else:
             print(f'{Fore.RED}Opción no válida.{Fore.RESET}')
     
@@ -167,7 +182,7 @@ def obtener_indices(letra, palabra):
 def mostrar_desafio(jugador, intentos, palabra_oculta):
     saludos = f'\n{Fore.BLUE}¡Hola, {jugador}!{Fore.RESET}'
     consigna = f'\n{Fore.CYAN}Adivina la palabra para ganar:{Fore.RESET}\n'
-    desafio = f'\n{palabra_oculta}'
+    desafio = f'\n{' '.join(palabra_oculta)}'
 
     if len(intentos) == 0:
         return print(saludos + consigna + desafio)
@@ -186,7 +201,7 @@ def mostrar_mensaje_vidas(vidas):
     elif 1 < vidas < 6:
         print(f'\nTe restan {Fore.YELLOW}{vidas}{Fore.RESET} vidas.')
     else:
-        print(f'\n{Fore.RED}¡Te queda sólo 1 vida!{Fore.RESET}')
+        print(f'\n{Fore.RED}¡Te queda sólo 1 vida!{Fore.RESET} 😱')
 
 
 def actualizar_pantalla(jugador, palabra_oculta, vidas, intentos):
@@ -231,7 +246,7 @@ def mostrar_pantalla_final(ganador: bool, jugador, palabra):
     
     else:
         oculta = f'"{Fore.YELLOW}{palabra.upper()}{Fore.RESET}"'
-        titulo = f'\n{Fore.RED}¡Te has quedado sin vidas!{Fore.RESET}'
+        titulo = f'\n{Fore.RED}¡Te has quedado sin vidas!{Fore.RESET} 💀'
         mensaje = f'\nLa palabra oculta era: {oculta}\n'
         game_over = f'\n{Fore.RED}*** GAME OVER ***{Fore.RESET}'
 
