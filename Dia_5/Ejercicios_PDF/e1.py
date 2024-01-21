@@ -28,3 +28,7 @@ def devolver_distintos(int1, int2, int3):
 print(devolver_distintos(1, 2, 3)) # 1
 print(devolver_distintos(4, 5, 6)) # 5
 print(devolver_distintos(7, 8, 9)) # 9
+
+
+# NOTA SOLUCIÓN PROFE:
+# Para el else, también puede usarse lista.sort() y luego devolver lista[1]

@@ -12,6 +12,7 @@ Aclaración, por convención el 0 y el 1 no se consideran primos.
 import math
 
 
+# NOTA DEV: Utilicé el teorema de Wilson como base de mi solución
 def contar_primos(n):
     lista_primos = []
     
@@ -25,3 +26,25 @@ def contar_primos(n):
     
 
 print(contar_primos(1000))
+
+
+'''
+# NOTA SOLUCIÓN PROFE:
+# Se puede hacer sin módulos adicionales de la siguiente forma:
+
+def contar_primos(numero):
+    primos = [2]
+    iteracion = 3
+    if numero < 2:
+        return 0
+    while iteracion <= numero:
+        for n in range(3, iteracion, 2):
+            if iteracion % n == 0:
+                iteracion += 2
+                break
+        else:
+            primos.append(iteracion)
+            iteracion += 2
+    print(primos)
+    return len(primos)
+'''

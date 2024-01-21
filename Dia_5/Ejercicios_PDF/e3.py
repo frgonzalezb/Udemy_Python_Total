@@ -21,3 +21,18 @@ def verificar_ceros_consecutivos(*args):
 
 print(verificar_ceros_consecutivos(5, 6, 1, 0, 0, 9, 3, 5))
 print(verificar_ceros_consecutivos(6, 0, 5, 1, 0, 3, 0, 1))
+
+
+'''
+# NOTA SOLUCIÓN PROFE:
+# También se puede utilizar un contador y verificar con este
+
+def ceros_vecinos(*args):
+    contador = 0
+    for num in args:
+        if args[contador] == 0 and args[contador + 1] == 0:
+            return True
+        else:
+            contador += 1
+    return False
+'''
