@@ -163,12 +163,16 @@ def mostrar_menu():
 
 def escoger_opcion():
     opcion = input('Ingrese el número de su opción: ')
-    return int(opcion) if opcion.isnumeric() else opcion
+
+    if not opcion.isnumeric():
+        mostrar_error(f'La opción "{opcion}" no es válida.')
+        return
+    
+    return int(opcion)
 
 
 def obtener_categorias(directorio_base):
-    directorio = Path(directorio_base, 'Recetas')
-    categorias = os.listdir(directorio)
+    categorias = os.listdir(directorio_base)
     categorias.insert(0, 'Volver al menú anterior')
 
     for numero, categoria in enumerate(categorias):
@@ -182,9 +186,49 @@ def obtener_categorias(directorio_base):
 
 
 def obtener_recetas(directorio_base, categoria):
-    directorio = Path(directorio_base, 'Recetas')
-    categorias = os.listdir(directorio)
+    ruta = Path(directorio_base, categoria)
+    recetas = os.listdir(ruta)
+    recetas.insert(0, 'Volver al menú anterior')
 
+    for numero, categoria in enumerate(recetas):
+        texto = f'[{numero}] - {categoria}'
+        if numero in max(enumerate(recetas)):
+            print(texto + '\n')
+        else:
+            print(texto)
+
+    return list(enumerate(recetas))
+
+
+def abrir_receta(directorio_base, categoria, receta):
+    while True:
+        limpiar_consola()
+        mostrar_titulo(receta)
+        ruta = Path(directorio_base, categoria, receta)
+        archivo = open(str(ruta))
+        print(archivo.read())
+        volver = confirmar_accion('¿Desea volver atrás?')
+        if volver:
+            archivo.close()
+            break
+    return
+
+
+def abrir_categoria(directorio_base, categoria):
+    while True:
+        limpiar_consola()
+        mostrar_titulo(categoria)
+        recetas = obtener_recetas(directorio_base, categoria)
+        opcion = escoger_opcion()
+        
+        if opcion is None:
+            continue
+        elif opcion == 0:
+            break
+        elif opcion > 0:
+            for numero, receta in recetas:
+                if numero == opcion:
+                    abrir_receta(directorio_base, categoria, receta)
     return
 
 
@@ -195,13 +239,14 @@ def leer_receta(directorio_base):
         categorias = obtener_categorias(directorio_base)
         opcion = escoger_opcion()
 
-        if opcion == 0:
+        if opcion is None:
+            continue
+        elif opcion == 0:
             break
-
-        for numero, categoria in categorias:
-            if opcion == numero:
-                obtener_recetas(categoria)
-          
+        elif opcion > 0:
+            for numero, categoria in categorias:
+                if numero == opcion:
+                    abrir_categoria(directorio_base, categoria)
     return
 
 
