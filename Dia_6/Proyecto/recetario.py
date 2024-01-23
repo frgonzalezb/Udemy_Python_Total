@@ -80,6 +80,8 @@ RESET = Fore.RESET
 DIRECTORIO_BASE = Path(Path.home(), 'Recetas')
 
 
+############################## UTILIDADES ##############################
+
 def limpiar_consola():
     sys('cls')
 
@@ -139,7 +141,7 @@ def mostrar_introduccion(directorio_base):
     continuar()
 
 
-def mostrar_menu():
+def mostrar_menu_principal():
     '''
     Imprime en consola el menú principal de la aplicación.
     '''
@@ -200,6 +202,8 @@ def obtener_recetas(directorio_base, categoria):
     return list(enumerate(recetas))
 
 
+######################### SUBMENÚS SECUNDARIOS #########################
+
 def abrir_receta(directorio_base, categoria, receta):
     while True:
         limpiar_consola()
@@ -232,7 +236,9 @@ def abrir_categoria(directorio_base, categoria):
     return
 
 
-def leer_receta(directorio_base):
+########################## SUBMENÚS PRIMARIOS ##########################
+
+def ir_a_leer_receta(directorio_base):
     while True:
         limpiar_consola()
         mostrar_titulo('Leer receta')
@@ -250,15 +256,28 @@ def leer_receta(directorio_base):
     return
 
 
-def crear_receta():
+def ir_a_crear_receta(directorio_base):
+    while True:
+        limpiar_consola()
+        mostrar_titulo('Crear receta')
+        categorias = obtener_categorias(directorio_base)
+        opcion = escoger_opcion()
+
+        if opcion is None:
+            continue
+        elif opcion == 0:
+            break
+        elif opcion > 0:
+            for numero, categoria in categorias:
+                if numero == opcion:
+                    abrir_categoria(directorio_base, categoria)
+
+
+def ir_a_crear_categoria():
     return
 
 
-def crear_categoria():
-    return
-
-
-def eliminar_receta():
+def ir_a_eliminar_receta():
     limpiar_consola()
     mostrar_alerta('Se eliminará esta receta completamente.', True)
     confirmacion = confirmar_accion('¿Desea eliminar esta receta?')
@@ -271,7 +290,7 @@ def eliminar_receta():
     continuar()
 
 
-def eliminar_categoria():
+def ir_a_eliminar_categoria():
     limpiar_consola()
     mostrar_alerta('Se eliminará esta categoría y todo su contenido.', True)
     confirmacion = confirmar_accion('¿Desea eliminar esta categoría?')
@@ -284,27 +303,34 @@ def eliminar_categoria():
     continuar()
 
 
+########################### SCRIPT PRINCIPAL ###########################
+    
 def ejecutar_programa(directorio_base):
     '''
     La columna vertebral del proyecto.
+    
+    Idealmente, ésta debería ser llamada por medio del
+    infame if __name__ == '__main__', pero a fin de
+    evitar posibles conflictos con otros proyectos
+    del cwd, mejor la dejo como está. 🤷‍♂️
     '''
     mostrar_introduccion(directorio_base)
     salir = False
 
     while not salir:
-        mostrar_menu()
+        mostrar_menu_principal()
         opcion = escoger_opcion()
 
         if opcion == 1:
-            leer_receta(directorio_base)
+            ir_a_leer_receta(directorio_base)
         elif opcion == 2:
-            crear_receta()
+            ir_a_crear_receta(directorio_base)
         elif opcion == 3:
-            crear_categoria()
+            ir_a_crear_categoria()
         elif opcion == 4:
-            eliminar_receta()
+            ir_a_eliminar_receta()
         elif opcion == 5:
-            eliminar_categoria()
+            ir_a_eliminar_categoria()
         elif opcion == 6:
             salir = confirmar_accion('¿Desea salir?')
         else:
