@@ -61,33 +61,147 @@ TIPS:
 '''
 
 import os
-
 from os import system as sys
+
 from pathlib import Path
 from colorama import Fore
+
+
+# Colores
+RED = Fore.RED
+YELLOW = Fore.YELLOW
+GREEN = Fore.GREEN
+CYAN = Fore.CYAN
+BLUE = Fore.BLUE
+MAGENTA = Fore.MAGENTA
+RESET = Fore.RESET
+
+# Directorio base
+DIRECTORIO_BASE = Path(Path.home(), 'Recetas')
 
 
 def limpiar_consola():
     sys('cls')
 
 
-def dar_bienvenida():
-    return
+def continuar():
+    input('Presione ENTER para continuar...')
 
 
-def informar_ruta():
-    return
+def confirmar_accion(pregunta):
+    opcion = input(f'{pregunta} (s/n): ')
+    return True if opcion.lower() == 's' else False
 
 
-def mostrar_total_recetas():
-    return
+def mostrar_alerta(mensaje, irreversibilidad=False):
+    if irreversibilidad:
+        irreversible = 'Esta acción es irreversible. '
+        print(YELLOW + 'ATENCIÓN: ' + irreversible + mensaje + RESET)
+    else:
+        print(YELLOW + 'ATENCIÓN: ' + mensaje + RESET)
+
+
+def mostrar_error(mensaje):
+    print(RED + 'ERROR: ' + mensaje + RESET)
+    continuar()
+
+
+def formatear_titulo(texto, caracter_borde='#'):
+    borde = f'{GREEN}{caracter_borde * len(texto)}{RESET}'
+    return f'{borde}\n{texto}\n{borde}'
+
+
+def mostrar_titulo(texto):
+    titulo = formatear_titulo(texto.upper())
+    print(titulo + '\n')
+    
+
+def entregar_informaciones(directorio_base):
+    if not directorio_base:
+        # Salir si no se encuentra "Recetas"
+        # Se podría implementar un "instalador" a futuro
+        mostrar_error('No se encuentra "Recetas" en su directorio base.')
+        exit()
+
+    cantidad = 0
+    for txt in directorio_base.glob('**/*.txt'):
+        cantidad += 1
+
+    ubicacion = f'Las recetas están en {directorio_base}'
+    mensaje = f'Este recetario contiene un total de {cantidad} recetas.'
+    print(ubicacion + '\n' + mensaje + '\n')
+
+
+def mostrar_introduccion(directorio_base):
+    limpiar_consola()
+    mostrar_titulo('¡Bienvenido al Recetario del Chef!')
+    entregar_informaciones(directorio_base)
+    continuar()
 
 
 def mostrar_menu():
+    '''
+    Imprime en consola el menú principal de la aplicación.
+    '''
+    limpiar_consola()
+    mostrar_titulo('Menú Principal')
+    opciones = [
+        'Leer receta',
+        'Crear receta',
+        'Crear categoría',
+        'Eliminar receta',
+        'Eliminar categoría',
+        'Salir del recetario',
+    ]
+    for numero, opcion in enumerate(opciones):
+        texto = f'[{numero+1}] - {opcion}'
+        if numero in max(enumerate(opciones)):
+            print(texto + '\n')
+        else:
+            print(texto)
+
+
+def escoger_opcion():
+    opcion = input('Ingrese el número de su opción: ')
+    return int(opcion) if opcion.isnumeric() else opcion
+
+
+def obtener_categorias(directorio_base):
+    directorio = Path(directorio_base, 'Recetas')
+    categorias = os.listdir(directorio)
+    categorias.insert(0, 'Volver al menú anterior')
+
+    for numero, categoria in enumerate(categorias):
+        texto = f'[{numero}] - {categoria}'
+        if numero in max(enumerate(categorias)):
+            print(texto + '\n')
+        else:
+            print(texto)
+
+    return list(enumerate(categorias))
+
+
+def obtener_recetas(directorio_base, categoria):
+    directorio = Path(directorio_base, 'Recetas')
+    categorias = os.listdir(directorio)
+
     return
 
 
-def leer_receta():
+def leer_receta(directorio_base):
+    while True:
+        limpiar_consola()
+        mostrar_titulo('Leer receta')
+        categorias = obtener_categorias(directorio_base)
+        opcion = escoger_opcion()
+
+        if opcion == 0:
+            break
+
+        for numero, categoria in categorias:
+            if opcion == numero:
+                obtener_recetas(categoria)
+          
     return
 
 
@@ -100,26 +214,56 @@ def crear_categoria():
 
 
 def eliminar_receta():
-    return
+    limpiar_consola()
+    mostrar_alerta('Se eliminará esta receta completamente.', True)
+    confirmacion = confirmar_accion('¿Desea eliminar esta receta?')
+    
+    if not confirmacion:
+        return
+    
+    respuesta = 'La receta se ha eliminado exitosamente.'
+    print(respuesta)
+    continuar()
 
 
 def eliminar_categoria():
-    return
+    limpiar_consola()
+    mostrar_alerta('Se eliminará esta categoría y todo su contenido.', True)
+    confirmacion = confirmar_accion('¿Desea eliminar esta categoría?')
+
+    if not confirmacion:
+        return
+    
+    respuesta = 'La categoría se ha eliminado exitosamente.'
+    print(respuesta)
+    continuar()
 
 
-def finalizar_programa():
-    return True
-
-
-def mostrar_adios():
-    return
-
-
-def ejecutar_programa():
+def ejecutar_programa(directorio_base):
+    '''
+    La columna vertebral del proyecto.
+    '''
+    mostrar_introduccion(directorio_base)
     salir = False
+
     while not salir:
-        # Aquí va el código del 'ejecutable'
-        pass
+        mostrar_menu()
+        opcion = escoger_opcion()
+
+        if opcion == 1:
+            leer_receta(directorio_base)
+        elif opcion == 2:
+            crear_receta()
+        elif opcion == 3:
+            crear_categoria()
+        elif opcion == 4:
+            eliminar_receta()
+        elif opcion == 5:
+            eliminar_categoria()
+        elif opcion == 6:
+            salir = confirmar_accion('¿Desea salir?')
+        else:
+            mostrar_error(f'La opción "{opcion}" no es válida.')
 
 
-ejecutar_programa()
+ejecutar_programa(DIRECTORIO_BASE)
