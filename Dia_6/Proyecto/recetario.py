@@ -86,7 +86,7 @@ def limpiar_consola():
     sys('cls')
 
 
-def continuar():
+def esperar_usuario():
     input('Presione ENTER para continuar...')
 
 
@@ -105,7 +105,7 @@ def mostrar_alerta(mensaje, irreversibilidad=False):
 
 def mostrar_error(mensaje):
     print(RED + 'ERROR: ' + mensaje + RESET)
-    continuar()
+    esperar_usuario()
 
 
 def formatear_titulo(texto, caracter_borde='#'):
@@ -138,7 +138,7 @@ def mostrar_introduccion(directorio_base):
     limpiar_consola()
     mostrar_titulo('¡Bienvenido al Recetario del Chef!')
     entregar_informaciones(directorio_base)
-    continuar()
+    esperar_usuario()
 
 
 def mostrar_menu_principal():
@@ -184,7 +184,7 @@ def obtener_categorias(directorio_base):
         else:
             print(texto)
 
-    return list(enumerate(categorias))
+    return categorias
 
 
 def obtener_recetas(directorio_base, categoria):
@@ -199,12 +199,12 @@ def obtener_recetas(directorio_base, categoria):
         else:
             print(texto)
 
-    return list(enumerate(recetas))
+    return recetas
 
 
 ######################### SUBMENÚS SECUNDARIOS #########################
 
-def abrir_receta(directorio_base, categoria, receta):
+def ver_receta(directorio_base, categoria, receta):
     while True:
         limpiar_consola()
         mostrar_titulo(receta)
@@ -215,10 +215,9 @@ def abrir_receta(directorio_base, categoria, receta):
         if volver:
             archivo.close()
             break
-    return
 
 
-def abrir_categoria(directorio_base, categoria):
+def ver_categoria(directorio_base, categoria):
     while True:
         limpiar_consola()
         mostrar_titulo(categoria)
@@ -230,10 +229,41 @@ def abrir_categoria(directorio_base, categoria):
         elif opcion == 0:
             break
         elif opcion > 0:
-            for numero, receta in recetas:
+            for numero, receta in enumerate(recetas):
                 if numero == opcion:
-                    abrir_receta(directorio_base, categoria, receta)
-    return
+                    ver_receta(directorio_base, categoria, receta)
+
+
+def crear_receta(directorio_base, categoria):
+    while True:
+        limpiar_consola()
+        mostrar_titulo(categoria)
+        nombre = input('Ingrese un nombre para la nueva receta: ')
+        ruta = Path(directorio_base, categoria, f'{nombre}.txt')
+
+        if ruta.exists():
+            mostrar_alerta('Ya existe una receta con ese nombre.')
+            volver = confirmar_accion('¿Desea volver atrás?')
+            if volver:
+                break
+            else:
+                continue
+        
+        default = f'Esta es la receta del {nombre}'
+        contenido = input('Ingrese el contenido de la receta: ')
+        contenido = contenido if contenido != '' else default
+        
+        archivo = open(ruta, 'w')
+        archivo.write(contenido)
+        archivo.close()
+
+        print(f'La receta "{nombre}" se ha creado exitosamente.')
+
+        volver = confirmar_accion('¿Desea volver atrás?')
+        if volver:
+            break
+        else:
+            continue
 
 
 ########################## SUBMENÚS PRIMARIOS ##########################
@@ -250,16 +280,16 @@ def ir_a_leer_receta(directorio_base):
         elif opcion == 0:
             break
         elif opcion > 0:
-            for numero, categoria in categorias:
+            for numero, categoria in enumerate(categorias):
                 if numero == opcion:
-                    abrir_categoria(directorio_base, categoria)
-    return
+                    ver_categoria(directorio_base, categoria)
 
 
 def ir_a_crear_receta(directorio_base):
     while True:
         limpiar_consola()
         mostrar_titulo('Crear receta')
+        print(f'{YELLOW}Seleccione una categoría:{RESET}\n')
         categorias = obtener_categorias(directorio_base)
         opcion = escoger_opcion()
 
@@ -268,9 +298,9 @@ def ir_a_crear_receta(directorio_base):
         elif opcion == 0:
             break
         elif opcion > 0:
-            for numero, categoria in categorias:
+            for numero, categoria in enumerate(categorias):
                 if numero == opcion:
-                    abrir_categoria(directorio_base, categoria)
+                    crear_receta(directorio_base, categoria)
 
 
 def ir_a_crear_categoria():
@@ -287,7 +317,7 @@ def ir_a_eliminar_receta():
     
     respuesta = 'La receta se ha eliminado exitosamente.'
     print(respuesta)
-    continuar()
+    esperar_usuario()
 
 
 def ir_a_eliminar_categoria():
@@ -300,7 +330,7 @@ def ir_a_eliminar_categoria():
     
     respuesta = 'La categoría se ha eliminado exitosamente.'
     print(respuesta)
-    continuar()
+    esperar_usuario()
 
 
 ########################### SCRIPT PRINCIPAL ###########################
