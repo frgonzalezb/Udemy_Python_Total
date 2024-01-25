@@ -303,8 +303,36 @@ def ir_a_crear_receta(directorio_base):
                     crear_receta(directorio_base, categoria)
 
 
-def ir_a_crear_categoria():
-    return
+def ir_a_crear_categoria(directorio_base):
+    while True:
+        limpiar_consola()
+        mostrar_titulo('Crear categoría')
+        nombre = input(
+            'Ingrese un nombre para la nueva categoría o cero (0) para volver: '
+        )
+
+        if nombre == '0':
+            break
+
+        ruta = Path(directorio_base, f'{nombre}')
+
+        if ruta.exists():
+            mostrar_alerta('Ya existe una categoría con ese nombre.')
+            volver = confirmar_accion('¿Desea volver atrás?')
+            if volver:
+                break
+            else:
+                continue
+        
+        os.makedirs(ruta)
+
+        print(f'La categoría "{nombre}" se ha creado exitosamente.')
+
+        volver = confirmar_accion('¿Desea volver atrás?')
+        if volver:
+            break
+        else:
+            continue
 
 
 def ir_a_eliminar_receta():
@@ -356,7 +384,7 @@ def ejecutar_programa(directorio_base):
         elif opcion == 2:
             ir_a_crear_receta(directorio_base)
         elif opcion == 3:
-            ir_a_crear_categoria()
+            ir_a_crear_categoria(directorio_base)
         elif opcion == 4:
             ir_a_eliminar_receta()
         elif opcion == 5:
