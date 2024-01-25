@@ -1,7 +1,10 @@
 .env
 .venv/
 
+Files/
+
 **/__pycache__/
+
 
 *.bat
 *.pdf
