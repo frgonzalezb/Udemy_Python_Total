@@ -51,6 +51,7 @@ CONSIGNA (lo que debe hacer el código):
     - pedir al usuario la categoría a escoger
     - eliminar la categoría (el directorio)
 
+    
 TIPS:
 - Envolver el código en un loop while (para que el usuario pueda
   salir con la opción [6]). El loop debe repetirse desde el menú.
@@ -217,10 +218,11 @@ def ver_receta(directorio_base, categoria, receta):
             break
 
 
-def ver_categoria(directorio_base, categoria):
+def ver_categoria(directorio_base, categoria, ver: bool):
     while True:
         limpiar_consola()
         mostrar_titulo(categoria)
+        print(f'{YELLOW}Seleccione una receta:{RESET}\n')
         recetas = obtener_recetas(directorio_base, categoria)
         opcion = escoger_opcion()
         
@@ -231,7 +233,10 @@ def ver_categoria(directorio_base, categoria):
         elif opcion > 0:
             for numero, receta in enumerate(recetas):
                 if numero == opcion:
-                    ver_receta(directorio_base, categoria, receta)
+                    if ver:
+                        ver_receta(directorio_base, categoria, receta)
+                    else:
+                        eliminar_receta(directorio_base, categoria, receta)
 
 
 def crear_receta(directorio_base, categoria):
@@ -257,13 +262,50 @@ def crear_receta(directorio_base, categoria):
         archivo.write(contenido)
         archivo.close()
 
-        print(f'La receta "{nombre}" se ha creado exitosamente.')
+        respuesta = f'La receta {nombre} ha sido creada exitosamente.'
+        print(GREEN + respuesta + RESET)
 
         volver = confirmar_accion('¿Desea volver atrás?')
         if volver:
             break
         else:
             continue
+
+
+def eliminar_receta(directorio_base, categoria, receta):
+    while True:
+        mostrar_alerta('Se eliminará esta receta completamente.', True)
+        confirmacion = confirmar_accion('¿Desea eliminar esta receta?')
+        
+        if not confirmacion:
+            break
+
+        ruta = Path(directorio_base, categoria, receta)
+
+        os.remove(ruta)
+        
+        respuesta = f'La receta {receta} ha sido eliminada exitosamente.'
+        print(GREEN + respuesta + RESET)
+        esperar_usuario()
+        break
+
+
+def eliminar_categoria(directorio_base, categoria):
+    while True:
+        mostrar_alerta('Se eliminará esta categoría y todo su contenido.', True)
+        confirmacion = confirmar_accion('¿Desea eliminar esta categoría?')
+
+        if not confirmacion:
+            break
+        
+        ruta = Path(directorio_base, categoria)
+
+        os.rmdir(ruta)
+        
+        respuesta = f'La categoría {categoria} ha sido eliminada exitosamente.'
+        print(GREEN + respuesta + RESET)
+        esperar_usuario()
+        break
 
 
 ########################## SUBMENÚS PRIMARIOS ##########################
@@ -282,7 +324,7 @@ def ir_a_leer_receta(directorio_base):
         elif opcion > 0:
             for numero, categoria in enumerate(categorias):
                 if numero == opcion:
-                    ver_categoria(directorio_base, categoria)
+                    ver_categoria(directorio_base, categoria, True)
 
 
 def ir_a_crear_receta(directorio_base):
@@ -326,7 +368,8 @@ def ir_a_crear_categoria(directorio_base):
         
         os.makedirs(ruta)
 
-        print(f'La categoría "{nombre}" se ha creado exitosamente.')
+        respuesta = f'La categoría {nombre} ha sido creada exitosamente.'
+        print(GREEN + respuesta + RESET)
 
         volver = confirmar_accion('¿Desea volver atrás?')
         if volver:
@@ -335,30 +378,40 @@ def ir_a_crear_categoria(directorio_base):
             continue
 
 
-def ir_a_eliminar_receta():
-    limpiar_consola()
-    mostrar_alerta('Se eliminará esta receta completamente.', True)
-    confirmacion = confirmar_accion('¿Desea eliminar esta receta?')
-    
-    if not confirmacion:
-        return
-    
-    respuesta = 'La receta se ha eliminado exitosamente.'
-    print(respuesta)
-    esperar_usuario()
+def ir_a_eliminar_receta(directorio_base):
+    while True:
+        limpiar_consola()
+        mostrar_titulo('Eliminar receta')
+        print(f'{YELLOW}Seleccione una categoría:{RESET}\n')
+        categorias = obtener_categorias(directorio_base)
+        opcion = escoger_opcion()
+
+        if opcion is None:
+            continue
+        elif opcion == 0:
+            break
+        elif opcion > 0:
+            for numero, categoria in enumerate(categorias):
+                if numero == opcion:
+                    ver_categoria(directorio_base, categoria, False)    
 
 
-def ir_a_eliminar_categoria():
-    limpiar_consola()
-    mostrar_alerta('Se eliminará esta categoría y todo su contenido.', True)
-    confirmacion = confirmar_accion('¿Desea eliminar esta categoría?')
+def ir_a_eliminar_categoria(directorio_base):
+    while True:
+        limpiar_consola()
+        mostrar_titulo('Eliminar categoría')
+        print(f'{YELLOW}Seleccione una categoría:{RESET}\n')
+        categorias = obtener_categorias(directorio_base)
+        opcion = escoger_opcion()
 
-    if not confirmacion:
-        return
-    
-    respuesta = 'La categoría se ha eliminado exitosamente.'
-    print(respuesta)
-    esperar_usuario()
+        if opcion is None:
+            continue
+        elif opcion == 0:
+            break
+        elif opcion > 0:
+            for numero, categoria in enumerate(categorias):
+                if numero == opcion:
+                    eliminar_categoria(directorio_base, categoria)
 
 
 ########################### SCRIPT PRINCIPAL ###########################
@@ -386,9 +439,9 @@ def ejecutar_programa(directorio_base):
         elif opcion == 3:
             ir_a_crear_categoria(directorio_base)
         elif opcion == 4:
-            ir_a_eliminar_receta()
+            ir_a_eliminar_receta(directorio_base)
         elif opcion == 5:
-            ir_a_eliminar_categoria()
+            ir_a_eliminar_categoria(directorio_base)
         elif opcion == 6:
             salir = confirmar_accion('¿Desea salir?')
         else:
