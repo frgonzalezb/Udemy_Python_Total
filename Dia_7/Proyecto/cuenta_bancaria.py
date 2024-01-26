@@ -7,16 +7,16 @@ Ver pdf y/o video para mayor información.
 
 from os import system as sys
 from random import randint
-from colorama import Fore
+from colored import Fore, Style
 
 
 # Colores
-RED = Fore.RED
-YELLOW = Fore.YELLOW
-GREEN = Fore.GREEN
-BLUE = Fore.BLUE
-MAGENTA = Fore.MAGENTA
-RESET = Fore.RESET
+RED = Fore.red
+YELLOW = Fore.yellow
+GREEN = Fore.green
+BLUE = Fore.blue
+MAGENTA = Fore.magenta
+RESET = Style.reset
 
 
 class Persona:
