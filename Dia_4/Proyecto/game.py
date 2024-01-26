@@ -18,20 +18,28 @@ CONSIGNA:
 '''
 
 from random import randint
-from colorama import Fore # Porque... ¿por qué no? 😁
+from colored import Fore, Style
+
+
+# Colores
+RED = Fore.red
+YELLOW = Fore.yellow
+GREEN = Fore.green
+BLUE = Fore.blue
+RESET = Style.reset
 
 
 def mostrar_mensaje_intentos(contador):
     if contador > 1:
-        print(f'\nTienes {Fore.YELLOW}{contador} intentos{Fore.RESET} para adivinar el número secreto.')
+        print(f'\nTienes {YELLOW}{contador} intentos{RESET} para adivinar el número secreto.')
     else:
-        print(f'\n¡Te queda {Fore.RED}sólo 1 intento{Fore.RESET} para adivinar el número secreto!')
+        print(f'\n¡Te queda {RED}sólo 1 intento{RESET} para adivinar el número secreto!')
 
 
 def mostrar_mensaje_victoria(jugador, contador):
     total = 8 - contador
-    print(f'\n{Fore.BLUE}¡Felicitaciones, {jugador}!{Fore.RESET}')
-    print(f'¡Has descubierto el número secreto {Fore.GREEN}{num_secreto}{Fore.RESET} en {Fore.YELLOW}{total}{Fore.RESET} intentos!')
+    print(f'\n{BLUE}¡Felicitaciones, {jugador}!{RESET}')
+    print(f'¡Has descubierto el número secreto {GREEN}{num_secreto}{RESET} en {YELLOW}{total}{RESET} intentos!')
 
 
 def mostrar_mensaje_derrota(jugador, num_secreto):
@@ -48,20 +56,20 @@ def ejecutar_juego(contador, num_secreto, jugador):
         
         if not intento.isnumeric():
             contador -= 1
-            print(f'{Fore.RED}ERROR:{Fore.RESET} "{intento}" no es una entrada válida.')
+            print(f'{RED}ERROR:{RESET} "{intento}" no es una entrada válida.')
             continue
 
         intento = int(intento)
 
         if intento < 1 or intento > 100:
             contador -= 1
-            print(f'\n{Fore.RED}¡Has fallado!{Fore.RESET} El número {Fore.YELLOW}{intento}{Fore.RESET} está fuera del rango.')
+            print(f'\n{RED}¡Has fallado!{RESET} El número {YELLOW}{intento}{RESET} está fuera del rango.')
         elif intento < num_secreto:
             contador -= 1
-            print(f'\n{Fore.RED}¡Has fallado!{Fore.RESET} El número {Fore.YELLOW}{intento}{Fore.RESET} es {Fore.GREEN}menor{Fore.RESET} al número secreto.')
+            print(f'\n{RED}¡Has fallado!{RESET} El número {YELLOW}{intento}{RESET} es {GREEN}menor{RESET} al número secreto.')
         elif intento > num_secreto:
             contador -= 1
-            print(f'\n{Fore.RED}¡Has fallado!{Fore.RESET} El número {Fore.YELLOW}{intento}{Fore.RESET} es {Fore.GREEN}mayor{Fore.RESET} al número secreto.')
+            print(f'\n{RED}¡Has fallado!{RESET} El número {YELLOW}{intento}{RESET} es {GREEN}mayor{RESET} al número secreto.')
         elif intento == num_secreto:
             mostrar_mensaje_victoria(jugador, contador)
             break
@@ -71,6 +79,6 @@ def ejecutar_juego(contador, num_secreto, jugador):
 
 contador = 8
 num_secreto = randint(1, 100)
-jugador = input(f'{Fore.BLUE}¡Bienvenido, jugador!{Fore.RESET}\nIngresa tu nombre: ')
+jugador = input(f'{BLUE}¡Bienvenido, jugador!{RESET}\nIngresa tu nombre: ')
 
 ejecutar_juego(contador, num_secreto, jugador)
