@@ -12,17 +12,35 @@ Aquí se encuentra el desarrollo de las funciones principales del programa.
 
 
 import numeros
-from colored import Fore, Style
+import utilidades
 
 
-# Colores
-RED = Fore.red
-YELLOW = Fore.yellow
-GREEN = Fore.green
-BLUE = Fore.blue
-MAGENTA = Fore.magenta
-RESET = Style.reset
+AREAS = [
+    'Perfumería',
+    'Farmacia',
+    'Cosmética',
+]
 
 
-def escoger_area():
-    return
+def mostrar_menu():
+    salir = False
+    while not salir:
+        utilidades.limpiar_consola()
+        utilidades.mostrar_titulo('Farmacia Matasanos')
+        utilidades.mostrar_opciones(AREAS)
+
+        opcion = utilidades.escoger_opcion()
+
+        if opcion == 1:
+            numeros.obtener_numero('P')
+            utilidades.esperar_usuario()
+        elif opcion == 2:
+            numeros.obtener_numero('F')
+        elif opcion == 3:
+            numeros.obtener_numero('C')
+        else:
+            continue
+
+
+if __name__ == '__main__':
+    mostrar_menu()
