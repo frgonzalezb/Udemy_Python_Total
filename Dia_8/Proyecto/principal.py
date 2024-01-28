@@ -36,8 +36,10 @@ def mostrar_menu():
             utilidades.esperar_usuario()
         elif opcion == 2:
             numeros.obtener_numero('F')
+            utilidades.esperar_usuario()
         elif opcion == 3:
             numeros.obtener_numero('C')
+            utilidades.esperar_usuario()
         else:
             continue
 

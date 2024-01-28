@@ -19,19 +19,25 @@ def decorar_numero(funcion):
     return funcion_a_decorar
 
 
-def generar_numero():
-    n = 0
+def generar_numero(letra_area):
+    num = 0
     while True:
-        n += 1
-        yield n
-            
+        yield f'{letra_area}-{num:02d}'
+        num = (num + 1) % 100
+
+
+gen_perfumeria = generar_numero('P')
+gen_farmacia = generar_numero('F')
+gen_cosmetica = generar_numero('C')
 
 
 @decorar_numero
 def obtener_numero(letra_area):
-    generador = generar_numero()
-    numero = next(generador)
-    if numero < 10:
-        print(letra_area + '-' + '0' + str(numero))
+    if letra_area == 'P':
+        print(next(gen_perfumeria))
+    elif letra_area == 'F':
+        print(next(gen_farmacia))
+    elif letra_area == 'C':
+        print(next(gen_cosmetica))
     else:
-        print(letra_area + '-' + str(numero))
+        utilidades.mostrar_error('Valor desconocido.')
