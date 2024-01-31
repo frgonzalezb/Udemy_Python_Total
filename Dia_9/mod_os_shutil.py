@@ -13,10 +13,10 @@ NOTAS IMPORTANTES:
 
 
 import os
-import shutil
 import send2trash
 
 import utilidades
+from utilidades import RED, YELLOW, RESET
 
 
 archivo = open('borrame_pls.txt', 'w')
@@ -31,11 +31,19 @@ print('Archivo borrame_pls.txt enviado a la papelera.')
 ruta = os.getcwd() + '\\Dia_8'
 
 for carpeta, subcarpetas, archivos in os.walk(ruta):
-    print(f'CARPETA: {carpeta}')
-    print('\tLas subcarpetas son: ')
-    for subcarpeta in subcarpetas:
-        print(f'\t\t{subcarpeta}')
-    print('\tLos archivos son: ')
-    for archivo in archivos:
-        print(f'\t\t{archivo}')
+    print(f'{YELLOW}CARPETA: {carpeta}{RESET}')
+    
+    if len(subcarpetas) == 0:
+        print(f'\t{RED}No hay subcarpetas.{RESET}')
+    else:
+        print('\tLas subcarpetas son: ')
+        for subcarpeta in subcarpetas:
+            print(f'\t\t{subcarpeta}')
+    
+    if len(archivos) == 0:
+        print(f'\t{RED}No hay archivos.{RESET}')
+    else:
+        print('\tLos archivos son: ')
+        for archivo in archivos:
+            print(f'\t\t{archivo}')
     print('\n')
