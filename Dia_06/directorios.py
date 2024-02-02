@@ -17,24 +17,24 @@ archivo.close()
 '''
 
 # Crear directorio
-os.makedirs(ruta + '\\Dia_6\\mkdirs_test')
+os.makedirs(ruta + '\\Dia_06\\mkdirs_test')
 
 # Eliminar directorio
-os.rmdir(ruta + '\\Dia_6\\mkdirs_test')
+os.rmdir(ruta + '\\Dia_06\\mkdirs_test')
 
 
 # Obtener partes de la ruta
-elemento = os.path.basename(ruta + '\\Dia_6\\Prueba.txt')
+elemento = os.path.basename(ruta + '\\Dia_06\\Prueba.txt')
 print(elemento)
-elemento = os.path.dirname(ruta + '\\Dia_6\\Prueba.txt')
+elemento = os.path.dirname(ruta + '\\Dia_06\\Prueba.txt')
 print(elemento)
-elemento = os.path.split(ruta + '\\Dia_6\\Prueba.txt')
+elemento = os.path.split(ruta + '\\Dia_06\\Prueba.txt')
 print(elemento)
 
 
 # Lo anterior funciona ok con Windows, pero no en otros OS
 # A veces, mejor usar Path
-ruta = ruta + '\\Dia_6'
+ruta = ruta + '\\Dia_06'
 carpeta = Path(ruta.replace('\\', '/'))
 archivo = carpeta / 'Prueba.txt'
 

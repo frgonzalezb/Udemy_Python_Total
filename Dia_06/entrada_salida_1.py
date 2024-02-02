@@ -1,5 +1,5 @@
 # Con ruta relativa por el entorno virtual 😑
-ruta_relativa = './Dia_6/'
+ruta_relativa = './Dia_06/'
 mi_archivo = open(ruta_relativa + 'Prueba.txt')
 
 '''

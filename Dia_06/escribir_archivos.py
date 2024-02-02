@@ -8,7 +8,7 @@ a = sólo escritura (cursor al final del archivo, se mantiene contenido previo;
 '''
 
 # Con ruta relativa por el entorno virtual 😑
-ruta_relativa = './Dia_6/'
+ruta_relativa = './Dia_06/'
 
 '''
 # Con 'r' explícito

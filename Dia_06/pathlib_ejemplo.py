@@ -3,7 +3,7 @@ from pathlib import Path, PureWindowsPath
 
 
 cwd = os.getcwd().replace('\\', '/')
-ruta = Path(cwd + '/Dia_6' + '/Prueba.txt')
+ruta = Path(cwd + '/Dia_06' + '/Prueba.txt')
 
 print(ruta.read_text()) # Devuelve el contenido
 print(ruta.name)        # Devuelve el nombre completo del archivo

@@ -28,7 +28,7 @@ utilidades.esperar_usuario()
 send2trash.send2trash('borrame_pls.txt')
 print('Archivo borrame_pls.txt enviado a la papelera.')
 
-ruta = os.getcwd() + '\\Dia_8'
+ruta = os.getcwd() + '\\Dia_08'
 
 for carpeta, subcarpetas, archivos in os.walk(ruta):
     print(f'{YELLOW}CARPETA: {carpeta}{RESET}')

@@ -15,7 +15,7 @@ BLUE = Fore.blue
 MAGENTA = Fore.magenta
 RESET = Style.reset
 
-ROOT = Path(os.getcwd(), 'Dia_9', 'Proyecto', 'Mi_Gran_Directorio')
+ROOT = Path(os.getcwd(), 'Dia_09', 'Proyecto', 'Mi_Gran_Directorio')
 PATTERN = r'N\w{3}-\d{5}'
 
 

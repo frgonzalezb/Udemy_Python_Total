@@ -12,7 +12,7 @@ from pathlib import Path
 
 CWD = os.getcwd()
 
-directorio = Path(CWD, 'Dia_9', 'Proyecto')
+directorio = Path(CWD, 'Dia_09', 'Proyecto')
 comprimido = Path(directorio, 'Proyecto+Dia+9.zip')
 
 zip_abierto = zipfile.ZipFile(comprimido, 'r')
