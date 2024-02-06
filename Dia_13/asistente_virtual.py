@@ -1,7 +1,7 @@
 import pyttsx3
 import speech_recognition as sr # Requiere setuptools!!
 import pywhatkit
-import yfinance
+import yfinance as yf
 import pyjokes
 import webbrowser
 import datetime
@@ -69,7 +69,7 @@ def hablar(mensaje):
     engine = pyttsx3.init()
 
     # Ajustar la velocidad de la voz
-    engine.setProperty('rate', 125)
+    engine.setProperty('rate', 150)
 
     # Ver las voces disponibles
     # for voice in engine.getProperty('voices'):
@@ -138,11 +138,11 @@ def pedir_cosas():
         # Activar el micro y guardar el pedido en un string
         pedido = transformar_audio_en_texto().lower()
 
-        if 'abrir navegador' in pedido:
+        if 'abre el navegador' in pedido:
             hablar('Abriendo tu navegador predeterminado...')
             webbrowser.open('https://www.google.com/')
             continue
-        elif 'abrir youtube' in pedido:
+        elif 'abre youtube' in pedido:
             hablar('Abriendo YouTube...')
             webbrowser.open('https://www.youtube.com/')
             continue
@@ -152,7 +152,44 @@ def pedir_cosas():
         elif 'qué hora es' in pedido:
             pedir_hora()
             continue
-        elif 'salir' in pedido:
+        elif 'busca en wikipedia' in pedido:
+            hablar('Buscando en Wikipedia...')
+            pedido.replace('busca en wikipedia', '')
+            wikipedia.set_lang('es')
+            resultado = wikipedia.summary(pedido, sentences=1)
+            hablar('Wikipedia dice lo siguiente: ')
+            hablar(resultado)
+            continue
+        elif 'busca en internet' in pedido:
+            hablar('Estoy en eso...')
+            pedido = pedido.replace('busca en internet', '')
+            pywhatkit.search(pedido)
+            hablar('Esto es lo que he encontrado: ')
+            continue
+        elif 'reproduce' in pedido:
+            hablar('Buena idea. Ya comienzo a reproducirlo en YouTube...')
+            pedido.replace('reproduce', '')
+            pywhatkit.playonyt(pedido)
+            continue
+        elif 'chiste' in pedido:
+            hablar(pyjokes.get_joke('es'))
+            continue
+        elif 'precio de las acciones' in pedido:
+            accion = pedido.split('de')[-1].strip()
+            cartera = {
+                'apple': 'APPL',
+                'amazon': 'AMZN',
+                'google': 'GOOGL'
+            }
+            try:
+                accion_buscada = cartera[accion]
+                accion_buscada = yf.Ticker(accion_buscada)
+                precio_actual = accion_buscada.info['regularMarketPrice']
+                hablar(f'El precio de {accion} es {precio_actual}')
+            except:
+                hablar('Mis disculpas. Ha ocurrido un error inesperado.')
+            continue
+        elif 'adiós' in pedido or 'salir' in pedido:
             hablar('Hasta pronto.')
             break
         else:
