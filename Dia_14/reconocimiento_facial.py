@@ -1,6 +1,7 @@
 '''
 Docs:
 https://pypi.org/project/face-recognition/
+https://pypi.org/project/opencv-python/
 '''
 
 
