@@ -12,6 +12,7 @@ import cv2
 import face_recognition as fr
 import numpy as np
 
+from datetime import datetime
 from pathlib import Path
 
 
@@ -48,6 +49,21 @@ def codificar(imagenes):
 
     # Devolver lista codificada
     return lista_codificada
+
+
+# Registrar los ingresos
+def registrar_ingreso(persona):
+    f = open(Path(CWD, 'Files', 'registro_empleados.csv'), 'r+')
+    lista_datos = f.readlines()
+    nombres_registro = []
+    for linea in lista_datos:
+        ingreso = linea.split(',')
+        nombres_registro.append(ingreso[0])
+    
+    if persona not in nombres_registro:
+        ahora = datetime.now()
+        string_ahora = ahora.strftime('%H:%M:%S')
+        f.writelines(f'\n{persona}, {string_ahora}')
 
 
 lista_empleados_codificada = codificar(mis_imagenes)
@@ -110,6 +126,8 @@ for caracodif, caraubic in zip(cara_captura_codificada, cara_captura):
         (255, 255, 255), 
         2
     )
+
+    registrar_ingreso(nombre)
 
     # Mostrar imagen obtenida
     cv2.imshow('Imagen web', imagen)
