@@ -1,1 +1,1 @@
-Este día se trabajó en cuadernos de Google Colab. ¯\_(ツ)_/¯
+Este día se trabajó en cuadernos de Google Colab. 🤷‍♂️
