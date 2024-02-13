@@ -1,3 +1,9 @@
+'''
+Docs:
+https://pypi.org/project/face-recognition/
+'''
+
+
 import os
 import cv2
 import face_recognition as fr
