@@ -1,0 +1,53 @@
+{% extends 'base/principal.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+  <p>{{ request.user }}</p>
+  {% comment %}
+  <a href="{% url 'logout' %}">Salir</a>
+
+  Obtengo error, debido a que en Django 5 esta forma está deprecada.
+  https://forum.djangoproject.com/t/deprecation-of-get-method-for-logoutview/25533/3
+
+  Para que funcione, ahora debe hacerse de la siguiente forma para 
+  aplicar el método POST requerido.
+  {% endcomment %}
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Salir">
+  </form>
+{% else %}
+  <a href="{% url 'login' %}">Ingresar</a>
+{% endif %}
+
+<hr>
+
+<h1>Lista de pendientes</h1>
+
+<a href="{% url 'crear_tarea' %}">Crear nueva tarea</a>
+
+<form action="" method="get">
+  <input type="text" name="buscador" id="buscador" value="{{ valor_buscado }}">
+  <input type="submit" value="Buscar">
+</form>
+
+<table>
+  <tr>
+    <th>Elementos</th>
+    <th></th>
+    <th></th>
+  </tr>
+  
+  {% for tarea in tareas %}
+    <tr>
+      <td>{{ tarea.titulo }}</td>
+      <td><a href="{% url 'editar_tarea' tarea.id %}">Editar</a></td>
+      <td><a href="{% url 'eliminar_tarea' tarea.id %}">Eliminar</a></td>
+    </tr>
+    {% empty %}
+    <h3>No hay elementos en esta lista</h3>
+  {% endfor %}
+</table>
+
+{% endblock %}

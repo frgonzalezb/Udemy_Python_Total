@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #FFDFD3;
+      font-family: "Abel", sans-serif;
+      padding-top: 0.5vh;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: auto;
+      background-color: #FEC8D8;
+      -webkit-box-shadow: 2px 2px 12px -4px rgba(0, 0, 0, 0.21);
+      box-shadow: 2px 2px 12px -4px rgba(0, 0, 0, 0.21);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Lato", sans-serif;
+      font-style: italic;
+    }
+
+    hr {
+      height: 10px;
+      background-color: #D291BC;
+    }
+
+    a, p {
+      color: #957DAD;
+    }
+  </style>
+
+  <title>Aplicación de tareas pendientes</title>
+</head>
+<body>
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
