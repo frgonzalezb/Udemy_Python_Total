@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
   
+  {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> {% endcomment %}
   <style>
     body {
       background-color: #FFDFD3;
@@ -17,6 +18,7 @@
     }
 
     .container {
+      border-radius: 10px 10px 0 0;
       max-width: 640px;
       margin: auto;
       background-color: #FEC8D8;
@@ -29,13 +31,135 @@
       font-style: italic;
     }
 
-    hr {
-      height: 10px;
-      background-color: #D291BC;
-    }
-
     a, p {
       color: #957DAD;
+    }
+
+    .barra-superior {
+      display: flex;
+      justify-content: space-between;
+      color: #FFFFFF;
+      padding: 10px;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(90deg, #FEC8D8 0%, #D291BC 25%, #957DAD 75%, #957DAD 100%)
+    }
+
+    .barra-superior a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+    }
+
+    .envoltorio-tarea {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-top: 1px solid #957DAD;
+    }
+
+    .titulo-tarea {
+      display: flex;
+    }
+
+    .titulo-tarea a {
+      text-decoration: none;
+      color: #957DAD;
+      margin-left: 10px;
+    }
+
+    .icono-tarea-completa {
+      height: 20px;
+      width: 20px;
+      border-radius: 50px;
+      background-color: lightgreen;
+    }
+
+    .icono-tarea-incompleta {
+      height: 20px;
+      width: 20px;
+      border-radius: 50px;
+      background-color: yellow;
+    }
+
+    .enlace-eliminar {
+      text-decoration: none;
+      font-weigth: 900;
+      color: red;
+      font-size: 32px;
+      line-height: 0;
+    }
+
+    #envoltorio-agregar-buscar {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #enlace-agregar {
+      color: #957DAD;
+      text-decoration: none;
+      font-size: 42px;
+    }
+
+    input[type=text], 
+    input[type=password], 
+    textarea {
+      font-family: "Lato", sans-serif;
+      border: 1px solid #957DAD;
+      border-radius: 5px;
+      padding: 10px;
+      width: 90%;
+    }
+
+    label {
+      padding-top: 10px !important;
+      display: block;
+    }
+
+    .button {
+      border: 1px solid #957DAD;
+      background-color: #957DAD;
+      padding: 10px;
+      color: #FFFFFF;
+      font-family: "Lato", sans-serif;
+      font-size: 14px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-salir {
+      border: 1px solid #957DAD;
+      background-color: #957DAD;
+      margin-left: 10px;
+      padding: 10px;
+      color: #FFFFFF;
+      font-family: "Lato", sans-serif;
+      font-size: 14px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .cuerpo-tarjeta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    ul {
+      color: #957DAD;
+    }
+
+    span {
+      display: block;
+    }
+
+    form {
+      min-width: 80%;
     }
   </style>
 

@@ -2,13 +2,18 @@
 
 {% block content %}
 
-<h1>Formulario de nueva tarea</h1>
-<a href="{% url 'tareas' %}">Volver</a>
+<div class="barra-superior">
+  <a href="{% url 'tareas' %}">&#x21A9; Volver</a>
+</div>
 
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Enviar">
-</form>
+<div class="cuerpo-tarjeta">
+  <h1>Agregar nueva tarea</h1>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="button" type="submit" value="Enviar">
+  </form>
+</div>
 
 {% endblock %}
